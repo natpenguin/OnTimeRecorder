@@ -75,5 +75,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let record = Record(context: viewContext)
         record.timestamp = Date()
         targetRecord = record
+        let newWakeItem = Wake(context: viewContext)
+        newWakeItem.timestamp = Date()
+        targetRecord?.wakedAt = newWakeItem
+        do {
+            try viewContext.save()
+        } catch {
+            fatalError("Failed to record device waking time")
+        }
     }
 }
