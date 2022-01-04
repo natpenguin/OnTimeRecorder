@@ -22,8 +22,8 @@ struct ContentView: View {
 
     var body: some View {
         HStack {
-            sleepItemsBody
             wakeItemsBody
+            sleepItemsBody
         }
         .padding(.vertical)
     }
