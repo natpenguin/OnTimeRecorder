@@ -12,75 +12,29 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Sleep.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Record.timestamp, ascending: true)],
         animation: .default)
-    private var sleepItems: FetchedResults<Sleep>
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Wake.timestamp, ascending: true)],
-        animation: .default)
-    private var wakeItems: FetchedResults<Wake>
+    private var items: FetchedResults<Record>
 
     var body: some View {
-        HStack {
-            wakeItemsBody
-            sleepItemsBody
-        }
-        .padding(.vertical)
+        itemsBody
+            .padding(.vertical)
     }
-    
-    var sleepItemsBody: some View {
-        VStack {
-            Text("Slept At")
-                .font(.title2)
-                .bold()
-            List {
-                ForEach(sleepItems) { item in
-                    Text(item.timestamp!, formatter: itemFormatter)
+
+    var itemsBody: some View {
+        List {
+            ForEach(items) { item in
+                HStack(spacing: 20) {
+                    if let wakedAt = item.wakedAt?.timestamp {
+                        Text(wakedAt, formatter: itemFormatter)
+                    }
+                    if let sleptAt = item.sleptAt?.timestamp {
+                        Text(sleptAt, formatter: itemFormatter)
+                    }
+                    if let duration = item.duration {
+                        Text("\(duration) seconds")
+                    }
                 }
-            }
-        }
-    }
-    
-    var wakeItemsBody: some View {
-        VStack {
-            Text("Waked At")
-                .font(.title2)
-                .bold()
-            List {
-                ForEach(wakeItems) { item in
-                    Text(item.timestamp!, formatter: itemFormatter)
-                }
-            }
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Wake(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { wakeItems[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
@@ -92,6 +46,13 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
+
+private extension Record {
+    var duration: TimeInterval? {
+        guard let wakedTimestamp = wakedAt?.timestamp?.timeIntervalSince1970, let sleptTimestamp = sleptAt?.timestamp?.timeIntervalSince1970 else { return nil }
+        return sleptTimestamp - wakedTimestamp
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

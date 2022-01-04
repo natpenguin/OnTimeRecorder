@@ -18,6 +18,10 @@ struct PersistenceController {
             newWakeItem.timestamp = Date()
             let newSleepItem = Sleep(context: viewContext)
             newSleepItem.timestamp = Date()
+            let newRecordItem = Record(context: viewContext)
+            newRecordItem.timestamp = Date()
+            newRecordItem.wakedAt = newWakeItem
+            newRecordItem.sleptAt = newSleepItem
         }
         do {
             try viewContext.save()
