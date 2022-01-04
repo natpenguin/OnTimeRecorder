@@ -17,13 +17,18 @@ struct ContentView: View {
     private var items: FetchedResults<Record>
 
     var body: some View {
-        itemsBody
+        VStack {
+            itemsBody
+        }
             .padding(.vertical)
     }
 
     var itemsBody: some View {
-        List {
-            ForEach(items) { item in
+        VStack(spacing: 16) {
+            Text("Records")
+                .font(.title)
+                .bold()
+            List(items) { item in
                 HStack(spacing: 20) {
                     if let wakedAt = item.wakedAt?.timestamp {
                         Text(wakedAt, formatter: itemFormatter)
@@ -31,8 +36,10 @@ struct ContentView: View {
                     if let sleptAt = item.sleptAt?.timestamp {
                         Text(sleptAt, formatter: itemFormatter)
                     }
+                    Spacer()
                     if let duration = item.duration {
-                        Text("\(duration) seconds")
+                        Text(String(format: "%.1f hours", duration / (60 * 60)))
+                            .bold()
                     }
                 }
             }

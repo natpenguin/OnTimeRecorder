@@ -17,7 +17,7 @@ struct PersistenceController {
             let newWakeItem = Wake(context: viewContext)
             newWakeItem.timestamp = Date()
             let newSleepItem = Sleep(context: viewContext)
-            newSleepItem.timestamp = Date()
+            newSleepItem.timestamp = Date().addingTimeInterval(Double((3600...7200).randomElement()!))
             let newRecordItem = Record(context: viewContext)
             newRecordItem.timestamp = Date()
             newRecordItem.wakedAt = newWakeItem
