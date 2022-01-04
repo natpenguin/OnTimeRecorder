@@ -13,6 +13,8 @@
 		143B42CE278348EF00138671 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 143B42CD278348EF00138671 /* Preview Assets.xcassets */; };
 		143B42D0278348EF00138671 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B42CF278348EF00138671 /* Persistence.swift */; };
 		143B42D3278348EF00138671 /* OnTimeRecorder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 143B42D1278348EF00138671 /* OnTimeRecorder.xcdatamodeld */; };
+		143CADF127848F7300670B9F /* Calendar+CustomExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143CADF027848F7300670B9F /* Calendar+CustomExtensions.swift */; };
+		143CADF327848F9A00670B9F /* TimeInterval+CustomExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143CADF227848F9A00670B9F /* TimeInterval+CustomExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		143B42CF278348EF00138671 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		143B42D2278348EF00138671 /* OnTimeRecorder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OnTimeRecorder.xcdatamodel; sourceTree = "<group>"; };
 		143B42D4278348EF00138671 /* OnTimeRecorder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OnTimeRecorder.entitlements; sourceTree = "<group>"; };
+		143CADF027848F7300670B9F /* Calendar+CustomExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+CustomExtensions.swift"; sourceTree = "<group>"; };
+		143CADF227848F9A00670B9F /* TimeInterval+CustomExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+CustomExtensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 		143B42C5278348EE00138671 /* OnTimeRecorder */ = {
 			isa = PBXGroup;
 			children = (
+				143CADEF27848F5B00670B9F /* Extensions */,
 				143B42C6278348EE00138671 /* OnTimeRecorderApp.swift */,
 				143B42C8278348EE00138671 /* ContentView.swift */,
 				143B42CA278348EF00138671 /* Assets.xcassets */,
@@ -73,6 +78,15 @@
 				143B42CD278348EF00138671 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		143CADEF27848F5B00670B9F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				143CADF027848F7300670B9F /* Calendar+CustomExtensions.swift */,
+				143CADF227848F9A00670B9F /* TimeInterval+CustomExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +159,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				143CADF127848F7300670B9F /* Calendar+CustomExtensions.swift in Sources */,
 				143B42D0278348EF00138671 /* Persistence.swift in Sources */,
+				143CADF327848F9A00670B9F /* TimeInterval+CustomExtensions.swift in Sources */,
 				143B42D3278348EF00138671 /* OnTimeRecorder.xcdatamodeld in Sources */,
 				143B42C9278348EE00138671 /* ContentView.swift in Sources */,
 				143B42C7278348EE00138671 /* OnTimeRecorderApp.swift in Sources */,

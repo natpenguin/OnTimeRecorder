@@ -81,26 +81,6 @@ private extension Record {
     }
 }
 
-private extension Calendar {
-    var rangeOfThisMonth: Range<Date> {
-        startOfThisMonth..<endOfThisMonth
-    }
-
-    var startOfThisMonth: Date {
-        let thisMonthDate = dateComponents([.year, .month], from: Date())
-        return date(from: thisMonthDate)!
-    }
-    var endOfThisMonth: Date {
-        date(byAdding: .month, value: 1, to: startOfThisMonth)!
-    }
-}
-
-private extension TimeInterval {
-    static func convertToHours(fromSeconds: TimeInterval) -> TimeInterval {
-        fromSeconds / 3600
-    }
-}
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
