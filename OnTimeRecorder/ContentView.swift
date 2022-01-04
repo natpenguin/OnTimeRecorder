@@ -17,13 +17,33 @@ struct ContentView: View {
     private var items: FetchedResults<Record>
 
     var body: some View {
-        VStack {
-            itemsBody
+        VStack(spacing: 40) {
+            thisMonthHoursBody
+            recordsBody
         }
             .padding(.vertical)
     }
 
-    var itemsBody: some View {
+    var thisMonthHoursBody: some View {
+        VStack(spacing: 16) {
+            Text("Hours of this month")
+                .font(.title)
+                .bold()
+            let rangeOfThisMonth = Calendar(identifier: .gregorian).rangeOfThisMonth
+            let reducedSeconds = items.reduce(TimeInterval(0)) { partialResult, record in
+                if let wakedAt = record.wakedAt?.timestamp, rangeOfThisMonth.contains(wakedAt) {
+                    return partialResult + (record.duration ?? 0)
+                } else {
+                    return partialResult
+                }
+            }
+            Text(String(format: "%.2f hours", TimeInterval.convertToHours(fromSeconds: reducedSeconds)))
+                .font(.title2)
+                .bold()
+        }
+    }
+
+    var recordsBody: some View {
         VStack(spacing: 16) {
             Text("Records")
                 .font(.title)
@@ -38,7 +58,7 @@ struct ContentView: View {
                     }
                     Spacer()
                     if let duration = item.duration {
-                        Text(String(format: "%.1f hours", duration / (60 * 60)))
+                        Text(String(format: "%.1f hours", TimeInterval.convertToHours(fromSeconds: duration)))
                             .bold()
                     }
                 }
@@ -58,6 +78,26 @@ private extension Record {
     var duration: TimeInterval? {
         guard let wakedTimestamp = wakedAt?.timestamp?.timeIntervalSince1970, let sleptTimestamp = sleptAt?.timestamp?.timeIntervalSince1970 else { return nil }
         return sleptTimestamp - wakedTimestamp
+    }
+}
+
+private extension Calendar {
+    var rangeOfThisMonth: Range<Date> {
+        startOfThisMonth..<endOfThisMonth
+    }
+
+    var startOfThisMonth: Date {
+        let thisMonthDate = dateComponents([.year, .month], from: Date())
+        return date(from: thisMonthDate)!
+    }
+    var endOfThisMonth: Date {
+        date(byAdding: .month, value: 1, to: startOfThisMonth)!
+    }
+}
+
+private extension TimeInterval {
+    static func convertToHours(fromSeconds: TimeInterval) -> TimeInterval {
+        fromSeconds / 3600
     }
 }
 
