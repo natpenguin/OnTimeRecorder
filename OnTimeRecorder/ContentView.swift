@@ -18,10 +18,33 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 40) {
-            thisMonthHoursBody
+            HStack(spacing: 40) {
+                lastMonthHoursBody
+                Divider()
+                thisMonthHoursBody
+            }
             recordsBody
         }
-            .padding(.vertical)
+            .padding()
+    }
+
+    var lastMonthHoursBody: some View {
+        VStack(spacing: 16) {
+            Text("Hours of last month")
+                .font(.title)
+                .bold()
+            let rangeOfLastMonth = Calendar(identifier: .gregorian).rangeOfLastMonth
+            let reducedSeconds = items.reduce(TimeInterval(0)) { partialResult, record in
+                if let wakedAt = record.wakedAt?.timestamp, rangeOfLastMonth.contains(wakedAt) {
+                    return partialResult + (record.duration ?? 0)
+                } else {
+                    return partialResult
+                }
+            }
+            Text(String(format: "%.2f hours", TimeInterval.convertToHours(fromSeconds: reducedSeconds)))
+                .font(.title2)
+                .bold()
+        }
     }
 
     var thisMonthHoursBody: some View {
