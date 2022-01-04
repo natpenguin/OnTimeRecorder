@@ -2,18 +2,20 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Record" representedClassName="Record" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="sleptAt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sleep"/>
-        <relationship name="wakedAt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wake"/>
+        <relationship name="sleptAt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sleep" inverseName="record" inverseEntity="Sleep"/>
+        <relationship name="wakedAt" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wake" inverseName="record" inverseEntity="Wake"/>
     </entity>
     <entity name="Sleep" representedClassName="Sleep" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Record" inverseName="sleptAt" inverseEntity="Record"/>
     </entity>
     <entity name="Wake" representedClassName="Wake" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Record" inverseName="wakedAt" inverseEntity="Record"/>
     </entity>
     <elements>
-        <element name="Sleep" positionX="-63" positionY="-9" width="128" height="44"/>
-        <element name="Wake" positionX="-54" positionY="0" width="128" height="44"/>
         <element name="Record" positionX="-36" positionY="9" width="128" height="74"/>
+        <element name="Sleep" positionX="-63" positionY="-9" width="128" height="59"/>
+        <element name="Wake" positionX="-54" positionY="0" width="128" height="59"/>
     </elements>
 </model>
