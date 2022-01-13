@@ -39,7 +39,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 self?.recordSleepingToPersistenceStore()
             }
             .store(in: &cancellables)
+        notificationCenter.publisher(for: NSWorkspace.screensDidSleepNotification)
+            .sink { [weak self] _ in
+                self?.recordSleepingToPersistenceStore()
+            }
+            .store(in: &cancellables)
         notificationCenter.publisher(for: NSWorkspace.didWakeNotification)
+            .sink { [weak self] _ in
+                self?.recordWakingToPersistenceStore()
+            }
+            .store(in: &cancellables)
+        notificationCenter.publisher(for: NSWorkspace.screensDidWakeNotification)
             .sink { [weak self] _ in
                 self?.recordWakingToPersistenceStore()
             }
